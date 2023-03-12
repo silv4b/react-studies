@@ -1,5 +1,10 @@
+import { Link } from "react-router-dom";
+
 export const Dashboard = () => {
   return (
-    <h1> Dashboard Page </h1>
-  )
-}
+    <div>
+      <h2> Dashboard Page </h2>
+      <Link to="/entrar">Entrar</Link>
+    </div>
+  );
+};
