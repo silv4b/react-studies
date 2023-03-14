@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useHistory -> useNavigate
 import '../login/Login.css';
 
@@ -6,15 +6,6 @@ export const Login = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
-
-  // useEffect sem dependência
-  useEffect(() => {
-    // if (window.confirm('Ok ou Cancelar?')) {
-    //   console.log("Opção [Ok] escolhida.");
-    // } else {
-    //   console.log("Opção [Cancelar] escolhida.");
-    // }
-  }, []);
 
   // useEffect com dependência (executa cad vez que a dependência é alterada)
   useEffect(() => {
@@ -25,14 +16,15 @@ export const Login = () => {
     console.log(`Senha: ${ senha }`);
   }, [senha]);
 
-  const handleEntrar = () => {
+  const handleEntrar = useCallback (() => {
     if (email === '' || senha === '') {
       alert("Campos vazios!");
     } else {
-      console.log(`Email: ${ email }`);
-      console.log(`Senha: ${ senha }`);
+      console.log('Entrou');
+      console.log(email);
+      console.log(senha);
     }
-  }
+  },[email, senha]);
 
   const handleLimpar = () => {
     setEmail('');
