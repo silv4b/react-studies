@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-// useHistory -> useNavigate
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom"; // useHistory -> useNavigate
+import '../login/Login.css';
 
 export const Login = () => {
   const [email, setEmail] = useState('');
@@ -44,30 +44,40 @@ export const Login = () => {
     navigate("/");
   };
 
+  const emailLenght = useMemo(() => {
+    return email.length
+  }, [email.length]);
+
+  const senhaLenght = useMemo(() => {
+    return senha.length
+  }, [senha.length]);
+
   return (
     <div>
       <h2> Página de Login </h2>
 
       <form action="">
-        <label htmlFor="">
-          <span> Email: </span>
-          <input value={ email } onChange={ e => setEmail(e.target.value) } type="text" />
-        </label>
+        <p>Caractéres no email: { emailLenght }</p>
 
-        <br /> <br />
+        <p>Caractéres na senha: { senhaLenght }</p>
 
-        <label htmlFor="">
-          <span> Senha: </span>
-          <input value={ senha } onChange={ e => setSenha(e.target.value) } type="password" />
-        </label>
+        <div className="labels">
+          <label htmlFor="">
+            <span> Email: </span>
+            <input value={ email } onChange={ e => setEmail(e.target.value) } type="text" />
+          </label>
 
-        <br /> <br />
+          <label htmlFor="">
+            <span> Senha: </span>
+            <input value={ senha } onChange={ e => setSenha(e.target.value) } type="password" />
+          </label>
+        </div>
 
-        <button onClick={ handleClique } type="button"> Página Inicial </button>
-        <span>  </span>
-        <button onClick={ handleEntrar } type="button"> Entrar </button>
-        <span>  </span>
-        <button onClick={ handleLimpar } type="button"> Limpar </button>
+        <div className="buttons">
+          <button onClick={ handleClique } type="button"> Página Inicial </button>
+          <button onClick={ handleEntrar } type="button"> Entrar </button>
+          <button onClick={ handleLimpar } type="button"> Limpar </button>
+        </div>
       </form>
     </div>
   );

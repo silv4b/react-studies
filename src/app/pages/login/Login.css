@@ -1,0 +1,13 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 225px;
+  padding-top: 4px;
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 60px;
+}
