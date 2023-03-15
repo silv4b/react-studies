@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useHistory -> useNavigate
 import '../login/Login.css';
 
 export const Login = () => {
-  // ao inicial o projeto armazena uma referencia para o elemento input do HTML, inicialmente null
+  // ao iniciar o projeto armazena uma referencia para o elemento input do HTML (tipado entre <>), inicialmente null
   const inputEmaildRef = useRef<HTMLInputElement>(null);
   const inputSenhaRef = useRef<HTMLInputElement>(null);
   const buttonEntrarRef = useRef<HTMLButtonElement>(null);
@@ -65,6 +65,7 @@ export const Login = () => {
               ref={ inputEmaildRef }
               value={ email }
               onChange={ e => setEmail(e.target.value) }
+              // interroção quer dizer que ele pode ou não ser null
               onKeyDown={ e => e.key === 'Enter' ? inputSenhaRef.current?.focus() : inputEmaildRef.current?.focus()}
             />
           </label>
