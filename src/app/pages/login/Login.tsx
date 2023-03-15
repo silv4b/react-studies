@@ -1,28 +1,33 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useHistory -> useNavigate
 import '../login/Login.css';
 
 export const Login = () => {
+  // ao inicial o projeto armazena uma referencia para o elemento input do HTML, inicialmente null
+  const inputEmaildRef = useRef<HTMLInputElement>(null);
+  const inputSenhaRef = useRef<HTMLInputElement>(null);
+  const buttonEntrarRef = useRef<HTMLButtonElement>(null);
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const navigate = useNavigate();
 
-  // useEffect com dependência (executa cad vez que a dependência é alterada)
-  useEffect(() => {
-    console.log(`Email: ${ email }`);
-  }, [email]);
+  // useEffect com dependência (executa cada vez que a dependência é alterada)
+  // useEffect(() => {
+  //   console.log(`Email: ${ email }`);
+  // }, [email]);
 
-  useEffect(() => {
-    console.log(`Senha: ${ senha }`);
-  }, [senha]);
+  // useEffect(() => {
+  //   console.log(`Senha: ${ senha }`);
+  // }, [senha]);
 
   const handleEntrar = useCallback (() => {
     if (email === '' || senha === '') {
-      alert("Campos vazios!");
+      alert('Campos vazios!');
+      inputEmaildRef.current?.focus();
     } else {
-      console.log('Entrou');
-      console.log(email);
-      console.log(senha);
+      console.log(`Email: ${ email }`);
+      console.log(`Senha: ${ senha }`);
     }
   },[email, senha]);
 
@@ -50,25 +55,36 @@ export const Login = () => {
 
       <form action="">
         <p>Caractéres no email: { emailLenght }</p>
-
         <p>Caractéres na senha: { senhaLenght }</p>
 
         <div className="labels">
           <label htmlFor="">
             <span> Email: </span>
-            <input value={ email } onChange={ e => setEmail(e.target.value) } type="text" />
+            <input
+              type="text"
+              ref={ inputEmaildRef }
+              value={ email }
+              onChange={ e => setEmail(e.target.value) }
+              onKeyDown={ e => e.key === 'Enter' ? inputSenhaRef.current?.focus() : inputEmaildRef.current?.focus()}
+            />
           </label>
 
           <label htmlFor="">
             <span> Senha: </span>
-            <input value={ senha } onChange={ e => setSenha(e.target.value) } type="password" />
+            <input
+              type="password"
+              ref={ inputSenhaRef }
+              value={ senha }
+              onChange={ e => setSenha(e.target.value) }
+              onKeyDown={ e => e.key === 'Enter' ? buttonEntrarRef.current?.focus() : undefined }
+            />
           </label>
         </div>
 
         <div className="buttons">
           <button onClick={ handleClique } type="button"> Página Inicial </button>
-          <button onClick={ handleEntrar } type="button"> Entrar </button>
           <button onClick={ handleLimpar } type="button"> Limpar </button>
+          <button onClick={ handleEntrar } type="button" ref={ buttonEntrarRef }> Entrar </button>
         </div>
       </form>
     </div>
