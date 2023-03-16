@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useHistory -> useNavigate
 import '../login/Login.css';
+import { InputLogin } from "./components/InputLogin";
 
 export const Login = () => {
   // ao iniciar o projeto armazena uma referencia para o elemento input do HTML (tipado entre <>), inicialmente null
@@ -58,28 +59,29 @@ export const Login = () => {
         <p>Caractéres na senha: { senhaLenght }</p>
 
         <div className="labels">
-          <label htmlFor="">
-            <span> Email: </span>
-            <input
-              type="text"
-              ref={ inputEmaildRef }
-              value={ email }
-              onChange={ e => setEmail(e.target.value) }
-              // interroção quer dizer que ele pode ou não ser null
-              onKeyDown={ e => e.key === 'Enter' ? inputSenhaRef.current?.focus() : inputEmaildRef.current?.focus()}
-            />
-          </label>
+          <InputLogin
+            label="Email"
+            value={ email }
+            onChange={ newValue => setEmail( newValue ) }
+            onPressEnter={ () => inputEmaildRef.current?.focus()  }
+          />
 
-          <label htmlFor="">
+          <InputLogin
+            label="Senha"
+            value={ senha }
+            type="password"
+            onChange={ newValue => setSenha( newValue ) }
+          />
+
+          {/* <label>
             <span> Senha: </span>
             <input
               type="password"
               ref={ inputSenhaRef }
               value={ senha }
               onChange={ e => setSenha(e.target.value) }
-              onKeyDown={ e => e.key === 'Enter' ? buttonEntrarRef.current?.focus() : undefined }
             />
-          </label>
+          </label> */}
         </div>
 
         <div className="buttons">
