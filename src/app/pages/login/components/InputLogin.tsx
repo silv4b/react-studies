@@ -1,5 +1,7 @@
+import React from "react";
+
 interface IInputLoginPros {
-  // Obs.: ? na frenter do parâmetro o torna opcional
+  // Obs.: ? na frente do parâmetro o torna opcional
   label: string;
   value: string;
   type?: string | "text";
@@ -7,11 +9,13 @@ interface IInputLoginPros {
   onPressEnter?: () => void;
 }
 
-export const InputLogin: React.FC<IInputLoginPros> = (props) => {
+// React.forwardRef -> Passando uma ref para dentro do componente (usado em algumas especificidades)
+export const InputLogin = React.forwardRef<HTMLInputElement, IInputLoginPros>((props, ref) => {
   return (
     <label>
       <span> { props.label }: </span>
       <input
+        ref={ ref }
         value={ props.value }
         type={ props.type }
         onChange={ e => props.onChange( e.target.value ) }
@@ -24,4 +28,4 @@ export const InputLogin: React.FC<IInputLoginPros> = (props) => {
       />
     </label>
   );
-};
+});

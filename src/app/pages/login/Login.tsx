@@ -5,7 +5,7 @@ import { InputLogin } from "./components/InputLogin";
 
 export const Login = () => {
   // ao iniciar o projeto armazena uma referencia para o elemento input do HTML (tipado entre <>), inicialmente null
-  const inputEmaildRef = useRef<HTMLInputElement>(null);
+  // const inputEmaildRef = useRef<HTMLInputElement>(null);
   const inputSenhaRef = useRef<HTMLInputElement>(null);
   const buttonEntrarRef = useRef<HTMLButtonElement>(null);
 
@@ -23,13 +23,8 @@ export const Login = () => {
   // }, [senha]);
 
   const handleEntrar = useCallback (() => {
-    if (email === '' || senha === '') {
-      alert('Campos vazios!');
-      inputEmaildRef.current?.focus();
-    } else {
       console.log(`Email: ${ email }`);
       console.log(`Senha: ${ senha }`);
-    }
   },[email, senha]);
 
   const handleLimpar = () => {
@@ -63,25 +58,17 @@ export const Login = () => {
             label="Email"
             value={ email }
             onChange={ newValue => setEmail( newValue ) }
-            onPressEnter={ () => inputEmaildRef.current?.focus()  }
+            onPressEnter={ () => inputSenhaRef.current?.focus()  }
           />
 
           <InputLogin
+            ref={ inputSenhaRef }
             label="Senha"
             value={ senha }
             type="password"
             onChange={ newValue => setSenha( newValue ) }
+            onPressEnter={ () => buttonEntrarRef.current?.focus()  }
           />
-
-          {/* <label>
-            <span> Senha: </span>
-            <input
-              type="password"
-              ref={ inputSenhaRef }
-              value={ senha }
-              onChange={ e => setSenha(e.target.value) }
-            />
-          </label> */}
         </div>
 
         <div className="buttons">
