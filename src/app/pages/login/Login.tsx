@@ -73,23 +73,19 @@ export const Login = () => {
         </div>
 
         <div className="buttons">
-          {/* <button onClick={ handleClique } type="button"> Página Inicial </button>
-          <button onClick={ handleLimpar } type="button"> Limpar </button>
-          <button onClick={ handleEntrar } type="button" ref={ buttonEntrarRef }> Entrar </button> */}
-
-          {/* <ButtonLogin label="Página Inicial" type="button" onClick={ handleClique } />
-          <ButtonLogin label="Limpar" type="button" onClick={ handleLimpar } />
-          <ButtonLogin label="Entrar" type="button" onClick={ handleEntrar } /> */}
 
           <ButtonLogin label="Página Inicial" type="button" onClick={ handleClique }>
             Página Inicial
           </ButtonLogin>
+
           <ButtonLogin label="Limpar" type="button" onClick={ handleLimpar } >
             Limpar
           </ButtonLogin>
+
           <ButtonLogin label="Entrar" type="button" onClick={ handleEntrar } >
             Entrar
           </ButtonLogin>
+
         </div>
       </form>
     </div>
