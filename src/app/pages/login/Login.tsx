@@ -1,9 +1,9 @@
-import { useCallback, useMemo, useRef, useState, useContext } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom"; // useHistory -> useNavigate
 import '../login/Login.css';
 import { InputLogin } from "./components/InputLogin";
 import { ButtonLogin } from "./components/ButtonLogin";
-import { UsuarioLogadoContext } from "../../shared/contexts";
+import { useUsuarioLogado } from "../../shared/hooks";
 
 export const Login = () => {
   // ao iniciar o projeto armazena uma referencia para o elemento input do HTML (tipado entre <>), inicialmente null
@@ -24,7 +24,7 @@ export const Login = () => {
   //   console.log(`Senha: ${ senha }`);
   // }, [senha]);
 
-  const { nomeDoUsuario } = useContext( UsuarioLogadoContext );
+  const { nomeDoUsuario } = useUsuarioLogado();
 
   const handleEntrar = useCallback (() => {
       console.log(`Email: ${ email }`);
