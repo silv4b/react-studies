@@ -19,7 +19,10 @@ export const Dashboard = () => {
         <button onClick={ () => counterRef.current.counter++ }>Count</button>
         <button onClick={ () => console.log(counterRef.current.counter) }> Console </button>
         <button onClick={ logout }> Logout </button>
+      </div>
+      <div className="buttons">
         <Link to="/entrar">Entrar</Link>
+        <Link to="/listas">Listas</Link>
       </div>
 
     </div>
