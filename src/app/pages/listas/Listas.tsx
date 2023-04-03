@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { useCallback, useState } from "react";
 
+interface IItemLista {
+  title: string;
+  isSelected: boolean;
+}
+
 export const Listas = () => {
 
-  const [lista, setLista] = useState<string[]>([]);
+  const [lista, setLista] = useState<IItemLista[]>([]);
 
   const navigate = useNavigate();
 
@@ -25,8 +30,13 @@ export const Listas = () => {
 
       setLista((oldLista) => {
         // se o valor já existir não inserir e retorna a lista atual
-        if (oldLista.includes(value)) return oldLista;
-        return [...oldLista, value];
+        if (oldLista.some((ListItem) => ListItem.title === value)) return oldLista;
+        return [
+          ...oldLista,
+          {
+            title: value,
+            isSelected: false
+          }];
       });
     }
   }, []);
@@ -42,9 +52,9 @@ export const Listas = () => {
       <button onClick={ handleCleanList }> Limpar </button>
 
       <ul>
-        {lista.map((value , index) => {
+        {lista.map((ListItem) => {
           return (
-            <li key={index}> {value} </li>
+            <li key={ListItem.title}> {ListItem.title} </li>
           );
         })}
       </ul>
