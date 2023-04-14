@@ -55,6 +55,33 @@ export const ListasJson = () => {
       [lista]
     );
 
+  const handleToggleComplete = useCallback(
+    (id: number) => {
+      const tarefaToUpdate = lista.find((tarefa) => tarefa.id === id);
+
+      if (!tarefaToUpdate) return; // se n
+
+      // alteracao na API
+      TarefasService.updateById(id, {
+        ...tarefaToUpdate,
+        isCompleted: !tarefaToUpdate.isCompleted,
+      }).then((result) => {
+        if (result instanceof APIException) {
+          alert("APIException: " + result.message);
+        } else {
+          // se der certo, altera o state da lista local
+          setLista((oldListaTarefa) => {
+            return oldListaTarefa.map((oldListaTarefa) => {
+              if (oldListaTarefa.id === id) return result;
+              return oldListaTarefa;
+            });
+          });
+        }
+      });
+    },
+    [lista]
+  );
+
   return (
     <div>
       <button onClick={handleClique}> Página Inicial </button>
@@ -71,20 +98,7 @@ export const ListasJson = () => {
               <input
                 type="checkbox"
                 checked={ListaTarefa.isCompleted}
-                onChange={() => {
-                  setLista((oldListaTarefa) => {
-                    return oldListaTarefa.map((oldListaTarefa) => {
-                      const newIsCompleted =
-                        oldListaTarefa.title === ListaTarefa.title
-                          ? !oldListaTarefa.isCompleted
-                          : oldListaTarefa.isCompleted;
-                      return {
-                        ...oldListaTarefa,
-                        isCompleted: newIsCompleted,
-                      };
-                    });
-                  });
-                }}
+                onChange={() => handleToggleComplete(ListaTarefa.id)}
               />
               {ListaTarefa.title}
             </li>
