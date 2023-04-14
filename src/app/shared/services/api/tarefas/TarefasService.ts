@@ -8,7 +8,7 @@ export interface ITarefa {
 }
 
 // passa como parametro um objeto ITarefa omitindo o atribudo id
-const create = async (dataToCreate: Omit<ITarefa, 'id'>): Promise<ITarefa[] | APIException> => {
+const create = async (dataToCreate: Omit<ITarefa, 'id'>): Promise<ITarefa | APIException> => {
   try {
     const { data } = await Api().post<any>('/tarefas', dataToCreate);
     return data;

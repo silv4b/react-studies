@@ -31,25 +31,29 @@ export const ListasJson = () => {
 
   // o evento que o useCallback receber é um keyboard event handler tipado como input element (onKeyDown)
   const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> =
-    useCallback((evt) => {
-      if (evt.key === "Enter") {
-        if (evt.currentTarget.value.trim().length === 0) return;
+    useCallback(
+      (evt) => {
+        if (evt.key === "Enter") {
+          if (evt.currentTarget.value.trim().length === 0) return;
 
-        const value = evt.currentTarget.value;
-        evt.currentTarget.value = "";
+          const value = evt.currentTarget.value;
+          evt.currentTarget.value = "";
 
-        setLista((oldLista) => {
-          return [
-            ...oldLista,
-            {
-              id: oldLista.length,
-              title: value,
-              isCompleted: false,
-            },
-          ];
-        });
-      }
-    }, []);
+          if (lista.some((ListItem) => ListItem.title === value)) return;
+
+          TarefasService.create({ title: value, isCompleted: false }).then(
+            (result) => {
+              if (result instanceof APIException) {
+                alert("APIException: " + result.message);
+              } else {
+                setLista((oldLista) => [...oldLista, result]);
+              }
+            }
+          );
+        }
+      },
+      [lista]
+    );
 
   return (
     <div>

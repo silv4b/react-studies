@@ -7,8 +7,23 @@
     },
     {
       "title": "Tarefa 02",
-      "isCompleted": false,
+      "isCompleted": true,
       "id": 2
+    },
+    {
+      "title": "Tarefa 03",
+      "isCompleted": false,
+      "id": 3
+    },
+    {
+      "title": "Tarefa 04",
+      "isCompleted": false,
+      "id": 4
+    },
+    {
+      "title": "Tarefa 05",
+      "isCompleted": false,
+      "id": 5
     }
   ]
 }
