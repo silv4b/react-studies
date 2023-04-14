@@ -1,15 +1,23 @@
 import { useNavigate } from "react-router-dom";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  ITarefa,
+  TarefasService,
+} from "../../shared/services/api/tarefas/TarefasService";
+import { APIException } from "../../shared/services/api/APIException";
 
-
-interface ITarefa {
-  id: number;
-  title: string;
-  isCompleted: boolean;
-}
-
-export const ListasJason = () => {
+export const ListasJson = () => {
   const [lista, setLista] = useState<ITarefa[]>([]);
+
+  useEffect(() => {
+    TarefasService.getAll().then((result) => {
+      if (result instanceof APIException) {
+        alert(result.message);
+      } else {
+        setLista(result);
+      }
+    });
+  }, []);
 
   const navigate = useNavigate();
 
@@ -31,9 +39,6 @@ export const ListasJason = () => {
         evt.currentTarget.value = "";
 
         setLista((oldLista) => {
-          // se o valor já existir não inserir e retorna a lista atual
-          if (oldLista.some((ListaTarefa) => ListaTarefa.title === value))
-            return oldLista;
           return [
             ...oldLista,
             {
