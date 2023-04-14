@@ -22,32 +22,25 @@ export const ListasJson = () => {
     navigate("/");
   };
 
-  const handleCleanList = () => {
-    setLista([]);
-  };
-
   // o evento que o useCallback receber é um keyboard event handler tipado como input element (onKeyDown)
-  const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback(
-    (evt) => {
-      if (evt.key === "Enter") {
-        if (evt.currentTarget.value.trim().length === 0) return;
+  const handleInputKeyDown: React.KeyboardEventHandler<HTMLInputElement> = useCallback((evt) => {
+    if (evt.key === "Enter") {
+      if (evt.currentTarget.value.trim().length === 0) return;
 
-        const value = evt.currentTarget.value;
-        evt.currentTarget.value = "";
+      const value = evt.currentTarget.value;
+      evt.currentTarget.value = "";
 
-        if (lista.some((ListItem) => ListItem.title === value)) return;
+      // if (lista.some((ListItem) => ListItem.title === value)) return;
 
-        TarefasService.create({ title: value, isCompleted: false }).then((result) => {
-          if (result instanceof APIException) {
-            alert("APIException: " + result.message);
-          } else {
-            setLista((oldLista) => [...oldLista, result]);
-          }
-        });
-      }
-    },
-    [lista]
-  );
+      TarefasService.create({ title: value, isCompleted: false }).then((result) => {
+        if (result instanceof APIException) {
+          alert("APIException: " + result.message);
+        } else {
+          setLista((oldLista) => [...oldLista, result]);
+        }
+      });
+    }
+  }, []);
 
   const handleToggleComplete = useCallback(
     (id: number) => {
@@ -75,6 +68,18 @@ export const ListasJson = () => {
     },
     [lista]
   );
+
+  const handleCleanList = useCallback(() => {
+    for (let i = 0; i < lista.length; i++) {
+      TarefasService.deteleById(lista[i].id).then((result) => {
+        if (result instanceof APIException) {
+          alert("APIException: " + result.message);
+        } else {
+          setLista([]);
+        }
+      });
+    }
+  }, [lista]);
 
   const handleDelete = useCallback((id: number) => {
     // alteracao na API
